@@ -1,0 +1,27 @@
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+body{
+  background: #05060d;
+  color:  #f5b971;
+  font-family: Inter,sans-serif;
+
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+main{
+  text-align: center;
+}
+h1{
+  letter-spacing: 4px;
+  font-size: 2rem;
+}
