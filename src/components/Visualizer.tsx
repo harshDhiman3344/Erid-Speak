@@ -154,11 +154,17 @@ export const Visualizer: React.FC = () => {
       }
       ctx.globalAlpha = 1.0;
 
-      // 7. NASA-style console text overlay
-      ctx.font = '9px "JetBrains Mono", monospace';
-      ctx.fillStyle = 'rgba(245, 185, 113, 0.4)';
-      ctx.fillText(`OSCILLOSCOPE LINK: ${isPlaying ? 'ACTIVE' : 'STANDBY'}`, 12, 20);
-      ctx.fillText(`FREQ_RES: 256B | W_FORM: SINE_COMP`, 12, 32);
+      // 7. NASA-style console text overlay (only draw if height allows)
+      if (h >= 75) {
+        ctx.font = '9px "JetBrains Mono", monospace';
+        ctx.fillStyle = 'rgba(245, 185, 113, 0.4)';
+        ctx.fillText(`OSC: ${isPlaying ? 'ACTIVE' : 'STANDBY'}`, 12, 20);
+        ctx.fillText(`FREQ_RES: 256B | W_FORM: SINE_COMP`, 12, 32);
+      } else {
+        ctx.font = '7px "JetBrains Mono", monospace';
+        ctx.fillStyle = 'rgba(245, 185, 113, 0.3)';
+        ctx.fillText(`OSC`, 6, 12);
+      }
     };
 
     draw();
@@ -170,7 +176,7 @@ export const Visualizer: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-[90px] bg-[#05060d] border border-[#f5b971]/25 rounded-lg overflow-hidden shadow-[inset_0_0_15px_rgba(245,185,113,0.05)]">
+    <div className="relative w-full h-full bg-[#05060d] overflow-hidden">
       <canvas ref={canvasRef} className="w-full h-full block" />
       {/* HUD scanline effect */}
       <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] z-10" />

@@ -22,8 +22,8 @@ body {
   background-color: var(--bg-color);
   color: var(--accent-primary);
   font-family: var(--font-mono);
-  min-height: 100vh;
-  overflow-x: hidden;
+  height: 100vh;
+  overflow: hidden;
   background-image: 
     radial-gradient(circle at 50% 50%, rgba(20, 24, 45, 0.6) 0%, rgba(5, 6, 13, 1) 100%),
     radial-gradient(rgba(245, 185, 113, 0.03) 1px, transparent 0);
@@ -95,7 +95,6 @@ h1, h2, h3, h4 {
   background: var(--panel-bg);
   border: 1px solid rgba(245, 185, 113, 0.2);
   border-radius: 8px;
-  padding: 1.25rem;
   position: relative;
   overflow: hidden;
   box-shadow: inset 0 0 15px rgba(245, 185, 113, 0.02), 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -125,38 +124,23 @@ h1, h2, h3, h4 {
   border-right: 2px solid var(--accent-primary);
 }
 
-.terminal-panel-active {
-  border-color: rgba(245, 185, 113, 0.5);
-  box-shadow: inset 0 0 20px rgba(245, 185, 113, 0.05), 0 0 15px rgba(245, 185, 113, 0.15);
-}
-
-/* Spaceship console grid layout layout helpers */
-.console-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 1.25rem;
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 1.5rem;
-}
-
 /* Neon buttons */
 .btn-console {
   background: transparent;
   color: var(--accent-primary);
   border: 1px solid var(--accent-primary);
   font-family: var(--font-digital);
-  font-size: 1rem;
-  padding: 0.6rem 1.2rem;
+  font-size: 10px;
+  padding: 6px 12px;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   cursor: pointer;
   border-radius: 4px;
   position: relative;
   overflow: hidden;
   transition: all 0.2s ease-in-out;
   box-shadow: 0 0 5px rgba(245, 185, 113, 0.1);
+  text-align: center;
 }
 
 .btn-console:hover:not(:disabled) {
@@ -198,51 +182,15 @@ h1, h2, h3, h4 {
   box-shadow: 0 0 12px rgba(255, 77, 77, 0.4);
 }
 
-/* Animations */
-@keyframes neon-pulse {
-  0% {
-    box-shadow: 0 0 5px rgba(245, 185, 113, 0.2), inset 0 0 5px rgba(245, 185, 113, 0.1);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(255, 157, 66, 0.4), inset 0 0 10px rgba(255, 157, 66, 0.2);
-  }
-  100% {
-    box-shadow: 0 0 5px rgba(245, 185, 113, 0.2), inset 0 0 5px rgba(245, 185, 113, 0.1);
-  }
-}
-
-.neon-pulse-active {
-  animation: neon-pulse 2s infinite ease-in-out;
-}
-
-@keyframes scanline-anim {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-
-.hud-scanner {
-  position: relative;
-}
-.hud-scanner::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  background: rgba(245, 185, 113, 0.25);
-  top: 0;
-  left: 0;
-  animation: scanline-anim 4s linear infinite;
-  pointer-events: none;
-  box-shadow: 0 0 8px var(--accent-primary);
-}
-
 /* Input fields */
 .console-input {
+  width: 100%;
   background: rgba(5, 6, 13, 0.7);
   border: 1px solid rgba(245, 185, 113, 0.3);
   color: #fff;
   font-family: var(--font-mono);
-  padding: 0.6rem;
+  font-size: 11px;
+  padding: 8px 12px;
   border-radius: 4px;
   outline: none;
   transition: all 0.2s ease;
@@ -253,32 +201,349 @@ h1, h2, h3, h4 {
   box-shadow: 0 0 8px rgba(245, 185, 113, 0.3);
 }
 
-/* Tailwind utility fallbacks since we are using Vanilla CSS */
-.w-full { width: 100%; }
-.h-full { height: 100%; }
-.flex { display: flex; }
-.grid { display: grid; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
-.justify-center { justify-content: center; }
-.flex-col { flex-direction: column; }
-.gap-2 { gap: 0.5rem; }
-.gap-4 { gap: 1rem; }
-.p-4 { padding: 1rem; }
-.p-6 { padding: 1.5rem; }
-.m-0 { margin: 0; }
-.mt-4 { margin-top: 1rem; }
-.mb-2 { margin-bottom: 0.5rem; }
-.mb-4 { margin-bottom: 1rem; }
-.text-center { text-align: center; }
-.overflow-hidden { overflow: hidden; }
-.rounded-lg { border-radius: 0.5rem; }
-.font-bold { font-weight: 700; }
-.text-sm { font-size: 0.875rem; }
-.text-xs { font-size: 0.75rem; }
-.text-xl { font-size: 1.25rem; }
-.relative { position: relative; }
-.absolute { position: absolute; }
-.pointer-events-none { pointer-events: none; }
-.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-.z-10 { z-index: 10; }
+/* -------------------------------------------------------------
+   Aerospace Cockpit Vanilla CSS Grid Layout System
+   ------------------------------------------------------------- */
+
+/* Main top container */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 10px;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  gap: 8px;
+}
+
+/* Header strip */
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.header-title-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-status-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-digital);
+  font-size: 10px;
+  color: rgba(245, 185, 113, 0.6);
+}
+
+/* Master grid layout splits left and right columns */
+.main-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr; /* Rigid column widths */
+  gap: 8px;
+  flex-grow: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Columns */
+.diagnostics-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.hub-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Left panel top Card */
+.diagnostics-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  flex-grow: 1;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* TV screen container inside diagnostics card */
+.tv-scope {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 75px;
+  height: 45px;
+  border: 1px solid rgba(245, 185, 113, 0.25);
+  border-radius: 4px;
+  background: #05060d;
+  overflow: hidden;
+  box-shadow: 0 0 6px rgba(245, 185, 113, 0.15);
+  z-index: 20;
+}
+
+/* Avatar layout block */
+.avatar-status-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 15px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.radar-wrapper {
+  width: 95px;
+  height: 95px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 1px solid rgba(245, 185, 113, 0.1);
+  border-radius: 4px;
+  background: rgba(5, 6, 13, 0.5);
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.status-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: var(--font-digital);
+  overflow: hidden;
+}
+
+/* Left panel bottom card */
+.mood-matrix-card {
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-top: 6px;
+}
+
+/* Right Panel: Hub Card */
+.hub-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Row 1: Inputs */
+.input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-mic-btn {
+  position: absolute;
+  right: 4px;
+  background: transparent;
+  border: none;
+  color: rgba(245, 185, 113, 0.7);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.input-mic-btn:hover {
+  color: #fff;
+}
+
+.input-mic-btn-active {
+  color: var(--color-error);
+  background: rgba(255, 77, 77, 0.15);
+  animation: pulse 1.5s infinite;
+}
+
+/* Dictionary sub panel */
+.dict-panel-overlay {
+  background: #05060d;
+  border: 1px solid rgba(245, 185, 113, 0.25);
+  padding: 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  margin-top: 4px;
+  max-h: 75px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.dict-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+}
+
+.dict-item {
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  border: 1px solid rgba(245, 185, 113, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.dict-item:hover {
+  background: rgba(245, 185, 113, 0.1);
+}
+
+/* Row 2: Chords Output */
+.chords-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-grow: 1;
+  min-height: 0;
+  overflow: hidden;
+  margin: 6px 0;
+}
+
+.chords-display-box {
+  background: rgba(5, 6, 13, 0.5);
+  border: 1px solid rgba(245, 185, 113, 0.15);
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.chords-text-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(245, 185, 113, 0.05);
+  padding-bottom: 3px;
+  flex-shrink: 0;
+}
+
+.glyphs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 2px 0;
+  flex-grow: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.glyph-item-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 5px;
+  border-radius: 4px;
+  border: 1px solid rgba(245, 185, 113, 0.08);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.glyph-item-btn:hover {
+  background: rgba(255, 157, 66, 0.08);
+}
+
+.glyph-item-btn-active {
+  border-color: var(--color-success);
+  background: rgba(87, 255, 179, 0.05);
+}
+
+/* Row 3: Sheet Notation */
+.sheet-notation-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.sheet-scale-wrap {
+  transform: scale(0.92);
+  transform-origin: top left;
+  height: 90px;
+  overflow: hidden;
+}
+
+/* Row 4: Master controls footer */
+.control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid rgba(245, 185, 113, 0.1);
+  padding-top: 6px;
+  flex-shrink: 0;
+}
+
+.control-bar-widgets {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.widget-box {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(5, 6, 13, 0.5);
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(245, 185, 113, 0.1);
+}
+
+/* Utility Animations */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(255, 77, 77, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
+}

@@ -28,7 +28,7 @@ export default function App() {
   // Audio Playback State
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playingWordIndex, setPlayingWordIndex] = useState<number>(-1);
-  const [volume, setVolume] = useState<number>(0); // Starts at 0 dB (much louder)
+  const [volume, setVolume] = useState<number>(0); // 0 dB is standard full volume
   const [tempoWpm, setTempoWpm] = useState<number>(65);
   const [recordActive, setRecordActive] = useState<boolean>(false);
   const [recordedAudioUrl, setRecordedAudioUrl] = useState<string>("");
@@ -230,40 +230,45 @@ export default function App() {
   }, [avatarPulse, isPlaying, currentMode]);
 
   return (
-    <div className="crt-screen h-screen overflow-hidden flex flex-col justify-between p-3 max-w-[1200px] w-full mx-auto text-xs">
+    <div className="crt-screen app-wrapper">
       
       {/* 1. Header (Compact, No Grow) */}
-      <header className="terminal-panel flex-shrink-0 w-full flex items-center justify-between py-2 px-3 mb-2">
-        <div className="flex items-center gap-3">
-          <span className="w-2 h-2 rounded-full bg-[#ff9d42] animate-ping" />
+      <header className="terminal-panel header-bar">
+        <div className="header-title-box">
+          <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#ff9d42' }} />
           <div>
-            <h1 className="text-md md:text-lg m-0 text-white font-bold leading-none">Eridian Comms HUD</h1>
-            <p className="text-[10px] font-digital tracking-widest text-[#f5b971]/60 leading-none mt-1">
+            <h1 style={{ fontSize: '13px', margin: 0, color: '#fff', fontWeight: 'bold', lineHeight: '1' }}>Eridian Comms HUD</h1>
+            <p className="font-digital" style={{ fontSize: '9px', color: 'rgba(245, 185, 113, 0.6)', letterSpacing: '1.5px', lineHeight: '1', marginTop: '3px' }}>
               HAIL MARY CONSOLE v2.6 // COGNITIVE INTERFACE
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-3 font-digital text-[10px] text-[#f5b971]/60">
+        <div className="header-status-box">
           <span>ATMOS SYNCED</span>
           <span>ORBITAL RATIO: 1.05</span>
         </div>
       </header>
 
-      {/* 2. Main content height-bounded */}
-      <main className="w-full flex-grow grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch min-h-0 overflow-hidden mb-2">
+      {/* 2. Main layout splits left and right columns */}
+      <main className="main-layout">
         
         {/* Left Column: Diagnostics (Avatar, Scope, Mood) */}
-        <section className="lg:col-span-4 flex flex-col gap-3 h-full min-h-0 overflow-hidden">
+        <section className="diagnostics-col">
           
           {/* Combined Biometrics and Scope Card */}
-          <div className="terminal-panel flex flex-col justify-between p-3 flex-grow min-h-0 overflow-hidden">
-            <h2 className="text-xs font-bold text-[#ff9d42] mb-1 leading-none uppercase flex-shrink-0">Signal Diagnostics</h2>
+          <div className="terminal-panel diagnostics-card">
+            <h2 style={{ fontSize: '10px', fontWeight: 'bold', color: '#ff9d42', textTransform: 'uppercase', lineHeight: '1', position: 'absolute', top: '10px', left: '10px' }}>Signal Diagnostics</h2>
             
-            {/* Split layout: Avatar Left, Scope Right */}
-            <div className="flex items-center justify-around gap-2 my-2 flex-grow overflow-hidden">
+            {/* TV Screen scope in the corner */}
+            <div className="tv-scope">
+              <Visualizer />
+            </div>
+
+            {/* Centered Avatar and Status metrics below title */}
+            <div className="avatar-status-container">
               {/* Pentapod Radar */}
-              <div className="w-[90px] h-[90px] flex items-center justify-center relative border border-[#f5b971]/10 rounded bg-[#05060d]/50 p-1 flex-shrink-0">
-                <svg viewBox="0 0 100 100" className="w-full h-full filter drop-shadow-[0_0_5px_rgba(255,157,66,0.25)]">
+              <div className="radar-wrapper">
+                <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%' }}>
                   <polygon points="50,10 88,38 73,82 27,82 12,38" fill="none" stroke="rgba(245, 185, 113, 0.05)" strokeWidth="0.8" />
                   {avatarLimbPoints.map((pt, idx) => (
                     <line key={idx} x1="50" y1="50" x2={pt.x} y2={pt.y} stroke={themeColors.glow} strokeWidth="1" strokeOpacity="0.4" />
@@ -277,25 +282,20 @@ export default function App() {
               </div>
 
               {/* Status metrics details */}
-              <div className="flex-grow flex flex-col justify-center font-digital pl-2 overflow-hidden">
-                <span className="text-[10px] text-[#f5b971]/50 uppercase leading-none">Rocky State</span>
-                <span className={`text-sm font-bold tracking-wider ${themeColors.text} uppercase leading-normal mt-0.5 truncate`}>{currentMode}</span>
+              <div className="status-details">
+                <span style={{ fontSize: '9px', color: 'rgba(245, 185, 113, 0.5)', textTransform: 'uppercase', lineHeight: '1' }}>Rocky State</span>
+                <span className={themeColors.text} style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', lineHeight: '1.2', marginTop: '2px' }}>{currentMode}</span>
                 
-                <span className="text-[9px] text-[#f5b971]/40 uppercase mt-1 leading-none">Carapace Radar</span>
-                <span className="text-[10px] text-white leading-normal">SYNC: OK</span>
+                <span style={{ fontSize: '8px', color: 'rgba(245, 185, 113, 0.4)', textTransform: 'uppercase', marginTop: '5px', lineHeight: '1' }}>Carapace Radar</span>
+                <span style={{ fontSize: '9px', color: '#57ffb3', fontWeight: 'bold', lineHeight: '1.2' }}>SYNC: ACTIVE</span>
               </div>
-            </div>
-
-            {/* Little Oscilloscope on the side */}
-            <div className="border border-[#f5b971]/15 rounded overflow-hidden flex-shrink-0">
-              <Visualizer />
             </div>
           </div>
 
           {/* Emotional Modes - Compact grid */}
-          <div className="terminal-panel p-3 flex-shrink-0">
-            <h2 className="text-xs font-bold text-[#ff9d42] mb-2 leading-none uppercase">Mood Matrix</h2>
-            <div className="grid grid-cols-4 gap-1">
+          <div className="terminal-panel mood-matrix-card">
+            <h2 style={{ fontSize: '10px', fontWeight: 'bold', color: '#ff9d42', textTransform: 'uppercase', lineHeight: '1' }}>Mood Matrix</h2>
+            <div className="mood-grid">
               {(['canon', 'scientific', 'curious', 'excited', 'confused', 'jazz', 'sleepy'] as FunMode[]).map((mode) => (
                 <button
                   key={mode}
@@ -303,7 +303,7 @@ export default function App() {
                     setCurrentMode(mode);
                     if (isPlaying) setIsPlaying(false);
                   }}
-                  className={`btn-console text-center py-1 px-1 text-[10px] truncate ${currentMode === mode ? 'btn-console-primary' : ''}`}
+                  className={`btn-console ${currentMode === mode ? 'btn-console-primary' : ''}`}
                   title={mode}
                 >
                   {mode}
@@ -311,7 +311,8 @@ export default function App() {
               ))}
               <button
                 onClick={() => setShowDictionary(prev => !prev)}
-                className={`btn-console text-center py-1 px-1 text-[10px] border-[#ff9d42] text-[#ff9d42] flex items-center justify-center gap-0.5`}
+                className="btn-console"
+                style={{ borderColor: '#ff9d42', color: '#ff9d42', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2px' }}
               >
                 <BookOpen size={9} />
                 <span>Dict</span>
@@ -321,38 +322,38 @@ export default function App() {
         </section>
 
         {/* Right Column: Main Simplifed Interface (Enter -> Translate -> Transmit) */}
-        <section className="lg:col-span-8 flex flex-col gap-3 h-full min-h-0 overflow-hidden">
+        <section className="hub-col">
           
           {/* Transmission card */}
-          <div className="terminal-panel p-3 flex-grow flex flex-col justify-between min-h-0 overflow-hidden">
-            <h2 className="text-xs font-bold text-[#ff9d42] mb-2 leading-none uppercase flex-shrink-0">Transmission HUB</h2>
+          <div className="terminal-panel hub-card">
+            <h2 style={{ fontSize: '10px', fontWeight: 'bold', color: '#ff9d42', textTransform: 'uppercase', lineHeight: '1' }}>Transmission HUB</h2>
 
             {/* 1. Enter Message (Unified Text Input + Mic Icon) */}
-            <div className="flex flex-col gap-1 flex-shrink-0">
-              <label className="text-[10px] font-mono text-[#f5b971]/60 uppercase leading-none mb-1">1. Enter English Message</label>
-              <div className="relative w-full flex items-center">
+            <div className="input-row">
+              <label style={{ fontSize: '8px', fontFamily: 'monospace', color: 'rgba(245, 185, 113, 0.6)', textTransform: 'uppercase', lineHeight: '1', marginBottom: '2px' }}>1. Enter English Message</label>
+              <div className="input-with-icon">
                 <input
                   type="text"
                   placeholder="Enter message to translate (e.g. hello friend science yes)..."
                   value={transcript}
                   onChange={(e) => setTranscript(e.target.value)}
-                  className="console-input w-full pr-10 text-sm font-mono"
+                  className="console-input"
                 />
                 <button
                   onClick={toggleListening}
                   type="button"
-                  className={`absolute right-1 p-2 rounded-full transition-colors ${isListening ? 'text-[#ff4d4d] bg-[#ff4d4d]/10 animate-pulse' : 'text-[#f5b971]/70 hover:text-white'}`}
+                  className={`input-mic-btn ${isListening ? 'input-mic-btn-active' : ''}`}
                   title="Voice dictation"
                 >
-                  {isListening ? <MicOff size={16} /> : <Mic size={16} />}
+                  {isListening ? <MicOff size={14} /> : <Mic size={14} />}
                 </button>
               </div>
             </div>
 
             {/* Dictionary Panel overlay inside Hub */}
             {showDictionary && (
-              <div className="bg-[#05060d] border border-[#f5b971]/30 p-2 rounded text-[10px] font-mono my-1 max-h-[85px] overflow-y-auto flex-shrink-0">
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-1">
+              <div className="dict-panel-overlay">
+                <div className="dict-grid">
                   {Object.entries(rockyDictionary).map(([word, notes]) => (
                     <div
                       key={word}
@@ -360,10 +361,10 @@ export default function App() {
                         setTranscript(prev => (prev ? prev + ' ' + word : word));
                         playSingleWord({ word, notes, symbols: '♫', glyphPath: '', glyphPoints: [] });
                       }}
-                      className="cursor-pointer hover:bg-[#f5b971]/10 p-0.5 rounded border border-[#f5b971]/5 flex justify-between items-center"
+                      className="dict-item"
                     >
-                      <span className="text-white font-bold">{word}</span>
-                      <span className="text-[#ff9d42] text-[8px] font-digital">{notes.join(' ')}</span>
+                      <span style={{ color: '#fff', fontWeight: 'bold' }}>{word}</span>
+                      <span className="font-digital" style={{ color: '#ff9d42', fontSize: '8px' }}>{notes.join(' ')}</span>
                     </div>
                   ))}
                 </div>
@@ -371,19 +372,25 @@ export default function App() {
             )}
 
             {/* 2. Translated Notes (Live Amber Output Chords + Unicode + SVG Eridian glyphs) */}
-            <div className="flex flex-col gap-1 flex-grow min-h-0 overflow-hidden my-1">
-              <label className="text-[10px] font-mono text-[#f5b971]/60 uppercase leading-none mb-1 flex-shrink-0">2. Translated Eridian Resonance Chords</label>
+            <div className="chords-panel">
+              <label style={{ fontSize: '8px', fontFamily: 'monospace', color: 'rgba(245, 185, 113, 0.6)', textTransform: 'uppercase', lineHeight: '1', marginBottom: '2px' }}>2. Translated Eridian Resonance Chords</label>
               
-              <div className="bg-[#05060d]/50 border border-[#f5b971]/15 p-2 rounded-lg flex flex-col gap-1.5 flex-grow min-h-0 overflow-hidden">
+              <div className="chords-display-box">
                 {/* Notes and unicode symbols */}
-                <div className="flex justify-between items-center border-b border-[#f5b971]/5 pb-1 flex-shrink-0">
-                  <div className="font-digital text-sm text-[#ff9d42] tracking-wider font-bold">
+                <div className="chords-text-row">
+                  <div className="font-digital" style={{ fontSize: '13px', color: '#ff9d42', letterSpacing: '1px', fontWeight: 'bold' }}>
                     {translation?.items.length > 0 ? (
                       translation.items.map((item, idx) => (
                         <span
                           key={idx}
                           onClick={() => playSingleWord(item)}
-                          className={`cursor-pointer hover:underline mx-1 ${playingWordIndex === idx ? 'text-[#57ffb3] font-black' : ''}`}
+                          style={{
+                            cursor: 'pointer',
+                            margin: '0 4px',
+                            textDecoration: playingWordIndex === idx ? 'underline' : 'none',
+                            color: playingWordIndex === idx ? '#57ffb3' : '#ff9d42',
+                            fontWeight: playingWordIndex === idx ? '900' : 'bold'
+                          }}
                         >
                           {item.notes.join('')}
                         </span>
@@ -392,30 +399,30 @@ export default function App() {
                       "AWAITING INPUT..."
                     )}
                   </div>
-                  <div className="text-sm font-digital text-[#f5b971]/80 italic">
+                  <div className="font-digital" style={{ fontSize: '12px', color: 'rgba(245, 185, 113, 0.8)', fontStyle: 'italic' }}>
                     {translation?.symbols ? translation.symbols : ""}
                   </div>
                 </div>
 
                 {/* Eridian coordinates glyph rows */}
                 {translation && translation.items.length > 0 && (
-                  <div className="flex flex-wrap gap-2 py-1 flex-grow overflow-y-auto scrollbar-thin min-h-0">
+                  <div className="glyphs-row">
                     {translation.items.map((item, idx) => (
                       <div
                         key={idx}
                         onClick={() => playSingleWord(item)}
-                        className={`flex items-center gap-1.5 p-1 rounded border cursor-pointer hover:bg-[#ff9d42]/10 transition-colors flex-shrink-0 ${playingWordIndex === idx ? 'border-[#57ffb3] bg-[#ff9d42]/5' : 'border-[#f5b971]/10'}`}
+                        className={`glyph-item-btn ${playingWordIndex === idx ? 'glyph-item-btn-active' : ''}`}
                       >
-                        <svg viewBox="0 0 100 100" className="w-5 h-5 filter drop-shadow-[0_0_3px_rgba(255,157,66,0.3)]">
+                        <svg viewBox="0 0 100 100" style={{ width: '22px', height: '22px' }}>
                           <polygon points="50,10 88,38 73,82 27,82 12,38" fill="none" stroke="rgba(245, 185, 113, 0.05)" strokeWidth="0.8" />
                           <path d={item.glyphPath} fill="none" stroke={playingWordIndex === idx ? '#57ffb3' : '#ff9d42'} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                           {item.glyphPoints.map((pt, pIdx) => (
                             <circle key={pIdx} cx={pt.x} cy={pt.y} r="3" fill={playingWordIndex === idx ? '#57ffb3' : '#f5b971'} />
                           ))}
                         </svg>
-                        <div className="flex flex-col text-[8px] font-mono leading-none">
-                          <span className="text-white font-bold">{item.word}</span>
-                          <span className="text-[#f5b971]/50">{item.notes.join(',')}</span>
+                        <div style={{ display: 'flex', flexDirection: 'column', fontSize: '8px', fontFamily: 'monospace', lineHeight: '1' }}>
+                          <span style={{ color: '#fff', fontWeight: 'bold' }}>{item.word}</span>
+                          <span style={{ color: 'rgba(245, 185, 113, 0.5)' }}>{item.notes.join(',')}</span>
                         </div>
                       </div>
                     ))}
@@ -425,30 +432,31 @@ export default function App() {
             </div>
 
             {/* 3. Musical sheet staff notation */}
-            <div className="flex flex-col gap-1 flex-shrink-0 mb-1">
-              <label className="text-[10px] font-mono text-[#f5b971]/60 uppercase leading-none mb-1">3. Sheet Notation</label>
-              <div className="scale-95 origin-top-left transform-gpu">
+            <div className="sheet-notation-row">
+              <label style={{ fontSize: '8px', fontFamily: 'monospace', color: 'rgba(245, 185, 113, 0.6)', textTransform: 'uppercase', lineHeight: '1', marginBottom: '2px' }}>3. Sheet Notation</label>
+              <div className="sheet-scale-wrap">
                 <SheetMusic chords={translation?.notes || []} />
               </div>
             </div>
 
             {/* 4. Play notes (Transmit controls) */}
-            <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 border-t border-[#f5b971]/15 pt-2 flex-shrink-0">
+            <div className="control-bar">
               {/* Play buttons */}
-              <div className="flex items-center gap-2 flex-grow">
+              <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
                 <button
                   onClick={startPlayback}
                   disabled={!translation || translation.items.length === 0}
-                  className={`btn-console flex-grow py-2 flex items-center justify-center gap-1.5 text-xs ${isPlaying ? 'btn-console-danger' : 'btn-console-primary'}`}
+                  className={`btn-console ${isPlaying ? 'btn-console-danger' : 'btn-console-primary'}`}
+                  style={{ flexGrow: 1, padding: '8px 16px', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                 >
                   {isPlaying ? (
                     <>
-                      <Square size={13} fill="currentColor" />
+                      <Square size={12} fill="currentColor" />
                       <span>Stop Transmission</span>
                     </>
                   ) : (
                     <>
-                      <Play size={13} fill="currentColor" />
+                      <Play size={12} fill="currentColor" />
                       <span>Transmit Message</span>
                     </>
                   )}
@@ -456,10 +464,10 @@ export default function App() {
               </div>
 
               {/* Sliders and recorder downloads */}
-              <div className="flex flex-wrap items-center gap-2 text-[10px] font-mono">
+              <div className="control-bar-widgets">
                 {/* Volume slider */}
-                <div className="flex items-center gap-2 bg-[#05060d]/50 px-2 py-1.5 rounded border border-[#f5b971]/10">
-                  <Volume2 size={11} className="text-[#f5b971]" />
+                <div className="widget-box">
+                  <Volume2 size={11} style={{ color: '#f5b971' }} />
                   <input
                     type="range"
                     min="-25"
@@ -467,14 +475,14 @@ export default function App() {
                     step="1"
                     value={volume}
                     onChange={(e) => setVolume(Number(e.target.value))}
-                    className="w-16 h-1 bg-[#05060d] rounded-lg appearance-none cursor-pointer accent-[#ff9d42]"
+                    style={{ width: '60px', height: '4px', background: '#05060d', borderRadius: '4px', appearance: 'none', cursor: 'pointer' }}
                   />
-                  <span className="w-6 text-right">{volume} dB</span>
+                  <span style={{ width: '32px', textAlign: 'right' }}>{volume} dB</span>
                 </div>
 
                 {/* Tempo slider */}
-                <div className="flex items-center gap-2 bg-[#05060d]/50 px-2 py-1.5 rounded border border-[#f5b971]/10">
-                  <Settings size={11} className="text-[#f5b971]" />
+                <div className="widget-box">
+                  <Settings size={11} style={{ color: '#f5b971' }} />
                   <input
                     type="range"
                     min="30"
@@ -482,27 +490,28 @@ export default function App() {
                     step="5"
                     value={tempoWpm}
                     onChange={(e) => setTempoWpm(Number(e.target.value))}
-                    className="w-16 h-1 bg-[#05060d] rounded-lg appearance-none cursor-pointer accent-[#ff9d42]"
+                    style={{ width: '60px', height: '4px', background: '#05060d', borderRadius: '4px', appearance: 'none', cursor: 'pointer' }}
                   />
-                  <span className="w-8 text-right">{tempoWpm} WPM</span>
+                  <span style={{ width: '42px', textAlign: 'right' }}>{tempoWpm} WPM</span>
                 </div>
 
                 {/* Recorder Arm */}
-                <div className="flex items-center gap-2 bg-[#05060d]/50 px-2 py-1 rounded border border-[#f5b971]/10">
-                  <label htmlFor="recordToggle" className="cursor-pointer">REC WAV</label>
+                <div className="widget-box">
+                  <label htmlFor="recordToggle" style={{ cursor: 'pointer' }}>REC WAV</label>
                   <input
                     type="checkbox"
                     checked={recordActive}
                     onChange={(e) => setRecordActive(e.target.checked)}
                     id="recordToggle"
                     disabled={isPlaying}
-                    className="w-3.5 h-3.5 cursor-pointer accent-[#ff9d42]"
+                    style={{ cursor: 'pointer' }}
                   />
                   {recordedAudioUrl && (
                     <a
                       href={recordedAudioUrl}
                       download={`rocky_${currentMode}_message.webm`}
-                      className="btn-console py-0.5 px-1.5 text-[9px] flex items-center gap-1 bg-[#ff9d42] text-[#05060d] hover:bg-[#ff9d42] border-[#ff9d42] rounded"
+                      className="btn-console"
+                      style={{ padding: '2px 6px', fontSize: '9px', background: '#ff9d42', color: '#05060d', borderColor: '#ff9d42', display: 'flex', alignItems: 'center', gap: '3px', borderRadius: '3px' }}
                       title="Download audio WAV"
                     >
                       <Download size={9} />
@@ -514,7 +523,7 @@ export default function App() {
             </div>
 
             {errorMessage && (
-              <div className="border border-[#ff4d4d]/30 bg-[#ff4d4d]/5 text-[10px] text-[#ff4d4d] p-1.5 rounded font-mono mt-2 leading-none">
+              <div style={{ border: '1px solid rgba(255, 77, 77, 0.3)', background: 'rgba(255, 77, 77, 0.05)', fontSize: '9px', color: '#ff4d4d', padding: '6px', borderRadius: '4px', fontFamily: 'monospace', marginTop: '6px', lineHeight: '1' }}>
                 ⚠ {errorMessage}
               </div>
             )}
