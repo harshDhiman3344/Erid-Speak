@@ -1,0 +1,19 @@
+:root {
+  --bg: #e8e4f0;
+  --card: #faf8ff;
+  --sidebar: #f5f2ff;
+  --border: #2d2440;
+  --text: #2d2440;
+  --muted: #9b8ec4;
+  --accent: #ed5168;
+}
+
+:root.dark {
+  --bg: #1a1625;
+  --card: #2a2440;
+  --sidebar: #221e35;
+  --border: #9b8ec4;
+  --text: #e8e4f0;
+  --muted: #7a6fa8;
+  --accent: #ed5168;
+}
