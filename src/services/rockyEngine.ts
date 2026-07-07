@@ -47,7 +47,8 @@ export const rockyDictionary: Record<string, string[]> = {
   negative: ["F3", "B3", "D4"],
   greetings: ["C4", "E4", "G4", "C5"],
   smart: ["D4", "F#4", "A4", "C#5"],
-  danger: ["Eb4", "Gb4", "A4", "C5"]
+  danger: ["Eb4", "Gb4", "A4", "C5"],
+  harsh: ["E4", "A4", "G4"]
 };
 
 // -------------------------------------------------------------
