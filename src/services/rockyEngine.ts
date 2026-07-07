@@ -48,7 +48,48 @@ export const rockyDictionary: Record<string, string[]> = {
   greetings: ["C4", "E4", "G4", "C5"],
   smart: ["D4", "F#4", "A4", "C#5"],
   danger: ["Eb4", "Gb4", "A4", "C5"],
-  harsh: ["E4", "A4", "G4"]
+  slack: ["E4", "A4", "G4"],
+    ryland: ["C4", "E4", "A4"],
+  grace: ["D4", "F#4", "A4", "D5"],
+
+  rockyfriend: ["E4", "G4", "B4", "D5"],
+  amaze: ["C4", "F4", "B4", "E5"],
+  understand: ["C4", "E4", "G4", "B4"],
+  confused: ["D4", "Eb4", "A4"],
+  explain: ["C4", "G4", "C5", "E5"],
+
+  taumoeba: ["Eb4", "Gb4", "Bb4"],
+  astrophage: ["C3", "G3", "D4", "A4"],
+  xenonite: ["F#4", "A4", "C5", "E5"],
+
+  cooperate: ["C4", "F4", "G4", "C5"],
+  trust: ["D4", "A4", "D5"],
+  dangerclose: ["Eb4", "Gb4", "A4", "Db5"],
+  safe: ["C4", "E4", "A4"],
+  solved: ["C4", "E4", "G4", "C5", "E5"],
+
+  fuel: ["G3", "D4", "A4"],
+  ship: ["C3", "G3", "C4", "G4"],
+  engine: ["D3", "A3", "D4", "F#4"],
+  spin: ["C4", "D4", "G4", "A4"],
+  accelerate: ["C4", "E4", "G4", "B4", "D5"],
+
+  questionmore: ["G4", "C5", "F5"],
+  uncertain: ["A3", "C4", "F4"],
+  certain: ["C4", "G4", "B4", "C5"],
+  agree: ["C4", "E4", "G4"],
+  disagree: ["F3", "Bb3", "D4"],
+
+  earthhome: ["C3", "G3", "C4", "E4"],
+  erid: ["D4", "G4", "Bb4", "D5"],
+  stars: ["C5", "G5", "D6"],
+  universe: ["C3", "G3", "D4", "A4", "E5"],
+
+  friendshipstrong: ["D4", "F#4", "A4", "C#5"],
+  celebrate: ["C4", "E4", "G4", "D5"],
+  successmission: ["C4", "E4", "G4", "B4", "E5"],
+  goodbyefriend: ["A3", "E4", "G4", "C5"]
+  
 };
 
 // -------------------------------------------------------------
