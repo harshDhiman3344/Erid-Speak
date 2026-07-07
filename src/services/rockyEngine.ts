@@ -287,13 +287,13 @@ class AudioEngine {
       }
     });
 
-    // Subtly modulate frequencies using a Vibrato effect to make the speech feel organic/fluctuating
+    // Subtly modulate frequencies using a Vibrato effec
     const vibrato = new Tone.Vibrato({
       frequency: 5.5,
       depth: 0.12
     });
 
-    // Spacecraft acoustics: delay & reverb
+    // Spacecraft acoustics
     this.delay = new Tone.FeedbackDelay({
       delayTime: '8n',
       feedback: 0.32,
@@ -302,7 +302,7 @@ class AudioEngine {
 
     this.reverb = new Tone.Reverb({
       decay: 2.2, // Atmospheric metallic hall reverb length
-      wet: 0.45 // Lush ambient wash
+      wet: 0.45 
     });
 
     // Add a Compressor to keep it loud and dense without clipping

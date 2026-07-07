@@ -463,7 +463,7 @@ export default function App() {
                 </button>
               </div>
 
-              {/* Sliders and recorder downloads */}
+              {}
               <div className="control-bar-widgets">
                 {/* Volume slider */}
                 <div className="widget-box">
