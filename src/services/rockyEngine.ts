@@ -80,7 +80,10 @@ export const rockyDictionary: Record<string, string[]> = {
   agree: ["C4", "E4", "G4"],
   disagree: ["F3", "Bb3", "D4"],
 
-
+  earthhome: ["C3", "G3", "C4", "E4"],
+  erid: ["D4", "G4", "Bb4", "D5"],
+  stars: ["C5", "G5", "D6"],
+  universe: ["C3", "G3", "D4", "A4", "E5"],
 
   friendshipstrong: ["D4", "F#4", "A4", "C#5"],
   celebrate: ["C4", "E4", "G4", "D5"],
