@@ -25,7 +25,7 @@ export default function App() {
   const [currentMode, setCurrentMode] = useState<FunMode>("canon");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  // Audio Playback State
+
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playingWordIndex, setPlayingWordIndex] = useState<number>(-1);
   const [volume, setVolume] = useState<number>(0); // 0 dB is standard full volume
