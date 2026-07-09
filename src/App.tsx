@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 
 export default function App() {
-  // Input State
+ 
   const [transcript, setTranscript] = useState<string>("Hello Rocky Friend");
   const [isListening, setIsListening] = useState<boolean>(false);
   const [currentMode, setCurrentMode] = useState<FunMode>("canon");
