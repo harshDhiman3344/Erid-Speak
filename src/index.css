@@ -31,7 +31,6 @@ body {
   position: relative;
 }
 
-/* CRT Screen Scanline Overlay Effect */
 body::after {
   content: " ";
   display: block;
@@ -47,7 +46,6 @@ body::after {
   opacity: 0.85;
 }
 
-/* CRT flicker animation */
 @keyframes crt-flicker {
   0% { opacity: 0.985; }
   50% { opacity: 0.995; }
