@@ -52,6 +52,7 @@ body::after {
   100% { opacity: 0.985; }
 }
 
+
 .crt-screen {
   animation: crt-flicker 0.15s infinite;
 }
@@ -179,8 +180,6 @@ h1, h2, h3, h4 {
   border-color: var(--color-error);
   box-shadow: 0 0 12px rgba(255, 77, 77, 0.4);
 }
-
-/* Input fields */
 .console-input {
   width: 100%;
   background: rgba(5, 6, 13, 0.7);
