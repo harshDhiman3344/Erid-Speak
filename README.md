@@ -9,7 +9,7 @@ A high-fidelity client-side spacecraft console inspired by Andy Weir's *Project 
 
 ## How to Use the Interface
 
-This HUD is designed as a single-page cockpit instrument. The communication sequence is structured into four simple steps:
+This HUD is designed as a single-page dashboard. The communication sequence is structured into four simple steps:
 
 ### Step 1: Input Your Message
 *   **Keypad Override**: Click the input field under **1. Enter English Message** and type any English phrase (e.g., `hello friend science yes`).
@@ -31,8 +31,9 @@ As you type or speak, the system automatically translates the message:
 *   **Eridian Script Glyphs**: The interface maps the chord notes onto coordinates of a pentagon (representing Rocky's 5-fold physical symmetry). Click any individual glyph card to play that word's chord in isolation.
 *   **Sheet Notation**: Look at **3. Sheet Notation** to see VexFlow render the chords sequentially onto a treble staff.
 
-### Step 4: Transmit and Record
-*   **Transmit**: Click **Transmit Message** to play the full sequence of translated chords.
+### THEN **Transmit**: Click **Transmit Message** to play the full sequence of translated chords.
+
+### Step 4 (Optional) 
 *   **Calibrate**: Use the sliders in the footer to adjust the output level (dB) and tempo speed (WPM).
 *   **Export WAV**: Arm the **REC WAV** checkbox before clicking **Transmit**. The interface will record the audio and compile a download link to save a high-quality audio file.
 
